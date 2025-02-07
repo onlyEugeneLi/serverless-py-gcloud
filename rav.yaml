@@ -1,0 +1,2 @@
+scripts:
+  runserver: uvicorn src.main:app --reload
