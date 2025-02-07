@@ -1,5 +1,10 @@
-FastAPI
-gunicorn
-uvicorn
-python-decouple
-rav
+# Environment setup
+FastAPI # Web framework
+gunicorn 
+uvicorn # Implement web application server
+python-decouple # Search for .env file and look for variables
+rav # Command shortcut for running the app
+
+# Testing
+pytest # Testing framework
+httpx # HTTP client for testing
