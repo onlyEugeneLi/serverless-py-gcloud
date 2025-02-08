@@ -2,16 +2,32 @@ scripts:
   runserver: uvicorn src.main:app --reload
   installs: pip install -r requirements.txt
   test: pytest src/tests.py
-  build: docker build -f Dockerfile -t serverless-py .
-  run-env-inline: docker run -e MODE=stage -p 1234:8000 --rm --name serverless-cont -it serverless-py
-  container_stage: docker run -e MODE=stage -p 1234:8000 --rm --name serverless-cont -it serverless-py
-  container_prod: docker run -e MODE=PRODA --env-file .env-prod -p 1234:8000 --rm --name serverless-cont -it serverless-py
-  run: docker run --env-file .env-prod -p 1234:8000 --rm --name serverless-cont -it serverless-py
-  build_run: 
-    - rav run build
-    - rav run run
   empty-build: docker build -f Dockerfile.empty -t empty-py .
   # empty-shell: docker exec -it <running_instance_name> /bin/bash
   empty-shell: docker exec -it empty-cont /bin/bash
   empty-run: docker run -p 1235:8000 --name empty-cont -it empty-py
-  push: docker push
+  build: docker build -f Dockerfile -t serverless-py .
+  container_stage: docker run -e MODE=stage -p 1234:8000 
+                   --rm --name serverless-cont -it serverless-py
+  container_prod: docker run -e MODE=PRODA --env-file .env-prod -p 1234:8000 
+                  --rm --name serverless-cont -it serverless-py
+  run: docker run --env-file .env-prod -p 1234:8000 
+      --rm --name serverless-cont -it serverless-py
+  build_run: 
+    - rav run build
+    - rav run run
+  configure:
+    - gcloud auth configure-docker us-central1-docker.pkg.dev
+    - gcloud artifacts repositories create serverless-py-repo 
+      --repository-format=docker --location=us-central1
+  push: 
+    #             --platform flag only rquired for Mac Silicon chip
+    - docker build --platform=linux/amd64 -f Dockerfile -t serverless-py-amd64 .
+    # - docker tag serverless-py-amd64 <region>-docker.pkg.dev/<project-id>
+    #   /<repo-name>/<image-name>:<tag-name>
+    - docker tag serverless-py-amd64 us-central1-docker.pkg.dev/serverless-py-app/serverless-py-repo/serverless-py:3.8.16-slim
+    - docker tag serverless-py-amd64 us-central1-docker.pkg.dev/serverless-py-app/serverless-py-repo/serverless-py:latest
+    - docker tag serverless-py-amd64 us-central1-docker.pkg.dev/serverless-py-app/serverless-py-repo/serverless-py:v1
+    - docker push us-central1-docker.pkg.dev/serverless-py-app/serverless-py-repo/serverless-py --all-tags
+  deploy:
+    - gcloud run deploy serverless-py --image=us-central1-docker.pkg.dev/serverless-py-app/serverless-py-repo/serverless-py:latest --allow-unauthenticated --region=us-central1 --project=serverless-py-app
