@@ -1,0 +1,15 @@
+# Which version of python
+# -slim, smaller container
+
+# Here we use conda as I use conda 
+# to manage my python environments on my local machine.
+FROM conda/miniconda3:latest
+
+COPY . /app
+WORKDIR /app/
+
+# Create a virtual environment
+RUN conda create --name cloud
+
+# Run the app
+CMD ["python", "-m", "http.server"]
