@@ -2,3 +2,16 @@ scripts:
   runserver: uvicorn src.main:app --reload
   installs: pip install -r requirements.txt
   test: pytest src/tests.py
+  build: docker build -f Dockerfile -t serverless-py .
+  run-env-inline: docker run -e MODE=stage -p 1234:8000 --rm --name serverless-cont -it serverless-py
+  container_stage: docker run -e MODE=stage -p 1234:8000 --rm --name serverless-cont -it serverless-py
+  container_prod: docker run -e MODE=PRODA --env-file .env-prod -p 1234:8000 --rm --name serverless-cont -it serverless-py
+  run: docker run --env-file .env-prod -p 1234:8000 --rm --name serverless-cont -it serverless-py
+  build_run: 
+    - rav run build
+    - rav run run
+  empty-build: docker build -f Dockerfile.empty -t empty-py .
+  # empty-shell: docker exec -it <running_instance_name> /bin/bash
+  empty-shell: docker exec -it empty-cont /bin/bash
+  empty-run: docker run -p 1235:8000 --name empty-cont -it empty-py
+  push: docker push
