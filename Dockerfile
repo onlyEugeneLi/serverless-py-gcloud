@@ -17,13 +17,13 @@ RUN apt-get update && \
     python3-dev \
     python3-pip \
     python3-setuptools \
-    gcc && \
+    gcc \
     make
 
 # Create a virtual environment
 RUN python3 -m venv /opt/py38 && \
     /opt/py38/bin/python -m pip install pip --upgrade && \
-    /opt/py38/bin/python -m pip install -r /app/src/requirements.txt
+    /opt/py38/bin/python -m pip install -r /app/requirements.txt
 
 # Purge unused
 RUN apt-get remove -y --purge make gcc build-essential \
@@ -34,4 +34,4 @@ RUN apt-get remove -y --purge make gcc build-essential \
 RUN chmod +x ./src/entrypoint.sh
 
 # Run the app
-CMD ["./entrypoint.sh"]
+CMD ["./src/entrypoint.sh"]
