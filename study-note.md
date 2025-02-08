@@ -64,5 +64,35 @@ Steps
 
 Reference file: [Dockerfile](Dockerfile)
 
+By default, you cannot access the container without exposing the port. 
+
+```
+docker run -p 1234:8000 -it empty-py
+```
+
+Go inside the container in terminal:
+
+```
+docker exec -it a34827407444 /bin/bash
+```
+
+`-p` --> port flag
+
+`-it` --> interactive flag
+
+`--name` --> name runtime setting flag
+
+To access container's shell:
+
+- [rav.yaml](rav.yaml)
+  ```
+  empty-run: docker run -p 1234:8000 --name <name_of_runtime> -it empty-py
+  empty-shell: docker exec -it <name_of_runtime> /bin/bash
+  ```
+- command line
+  ```
+  rav run empty-run
+  rav run empty-shell
+  ```
 
 Last update above: 2025-2-7
