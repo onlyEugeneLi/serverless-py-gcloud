@@ -28,7 +28,7 @@ jobs:
         run: | # a multiple-line command symbol
           pytest src/tests.py
 
-  build_deploy:
+  build_push:
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -40,4 +40,9 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - name: Build container image
         run: |
-            docker build -f Dockerfile -t serverless-py-github .
+            docker build --platform=linux/amd64 -f Dockerfile -t serverless-py-github .
+            docker tag serverless-py-github us-central1-docker.pkg.dev/serverless-py-app/serverless-py-repo/serverless-py-github:latest
+            docker push us-central1-docker.pkg.dev/serverless-py-app/serverless-py-repo/serverless-py-github --all-tags
+    # stage:
+    #   needs: [test, build_push]
+    # deploy:
