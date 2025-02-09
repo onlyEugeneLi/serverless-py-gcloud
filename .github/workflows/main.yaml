@@ -1,0 +1,33 @@
+# github CI/CD pipeline
+name: Test, Build, and Push to Google Cloud run
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+      - "18-end"
+      - "master"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3 # github.com/actions/checkout
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+      - name: Install requirements
+        run: | # a multiple-line command symbol
+          python -m pip install -r src/requirements.txt
+      - name: Run tests
+        env:
+          MODE: "github actions"
+        run: | # a multiple-line command symbol
+          pytest src/tests.py
+
+  # build_deploy:
+  #   needs: test
+  #   runs-on: ubuntu-latest
