@@ -6,8 +6,7 @@ on:
   push:
     branches:
       - "main"
-      - "18-end"
-      - "master"
+      - "setup-gcloud"
 
 jobs:
   test:
@@ -38,11 +37,26 @@ jobs:
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
       - name: Build container image
         run: |
             docker build --platform=linux/amd64 -f Dockerfile -t serverless-py-github .
-            docker tag serverless-py-github us-central1-docker.pkg.dev/serverless-py-app/serverless-py-repo/serverless-py-github:latest
-            docker push us-central1-docker.pkg.dev/serverless-py-app/serverless-py-repo/serverless-py-github --all-tags
+            docker tag serverless-py-github ${{ secrets.CONTAINER_IMAGE_URL }}:latest
+            docker tag serverless-py-github ${{ secrets.CONTAINER_IMAGE_URL }}:v1
+            gcloud auth configure-docker us-central1-docker.pkg.dev
+            docker push ${{ secrets.CONTAINER_IMAGE_URL }} --all-tags
+      - name: Deploy container to Google Cloud run
+        run: |
+          gcloud run deploy serverless-py-github \
+            --image=${{ secrets.CONTAINER_IMAGE_URL }}:latest \
+            --allow-unauthenticated \
+            --region=${{ secrets.GCLOUD_REGION }} \
+            --project=${{ secrets.GCLOUD_PROJECT_ID}}
+
     # stage:
     #   needs: [test, build_push]
     # deploy:

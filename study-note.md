@@ -96,3 +96,26 @@ To access container's shell:
   ```
 
 Last update above: 2025-2-7
+
+
+## CI/CD Pipeline
+
+Github Actions:
+
+Automates deployment processes (to server like Google Cloud, AWS and Azure etc.) by running the change deployment upon every `git push` received to remote repository.
+
+There are standard scripts available on Github for Github Actions setup. 
+
+[Setup docker buildx](https://github.com/docker/setup-buildx-action)
+
+[Setup Google Cloud in Github Actions](https://github.com/google-github-actions/setup-gcloud)
+
+[Authenticate to Google Cloud from Github Actions](https://github.com/google-github-actions/auth?tab=readme-ov-file#sake)
+
+Github Actions Secrets:
+
+Hide the credentials in the project. Abstract them away from code.
+
+```
+${{ secrets.SECRET_NAME }}
+```
