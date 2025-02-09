@@ -2,6 +2,16 @@
 
 This file documents key takeaways along the learning journey.
 
+## Tools and Concepts
+
+Google Cloud Run: A server to pull and run image.
+
+Docker container image: Virtual machine that has environment set up and saves all required documents.
+
+Google Cloud Artifacts Registry: A space to store Docker image in the Cloud so to be pulled by runtime service. 
+
+Google Cloud IAM: Manages service accounts and provides appropriate access for accounts to run services.  
+
 ## Python Project Setup
 
 ### FastAPI
