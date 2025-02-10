@@ -19,6 +19,8 @@ def home_page():
     # return {"Hello": "World", "mode": MODE}
     response = {
         "Hello": "World",
+        "Description": "This is my first cloud deployment using FastAPI",
+        "Platform": "Google Cloud Run",
         "mode": MODE,
         "username": USERNAME,
         "userid": USERID
