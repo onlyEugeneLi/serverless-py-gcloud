@@ -1,5 +1,6 @@
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
+from fastapi.responses import HTMLResponse
 from src.env import config 
 import json
 
@@ -12,16 +13,14 @@ USERID = config("USERID", cast=int, default=000000)
 
 app = FastAPI()
 
-@app.get("/") # GET -> HTTP Method
+@app.get("/", response_class=HTMLResponse)
 def home_page():
-    # for API services
-    # JSON-ready dict -> json.dumps({"Hello": "World"})
-    # return {"Hello": "World", "mode": MODE}
-    response = {
-        "Hello": "World",
-        "mode": MODE,
-        "username": USERNAME,
-        "userid": USERID
-    }
-    # return json.dumps(response, indent=4)
-    return response
+    with open("src/template.html", "r") as file:
+        html_content = file.read()
+    return HTMLResponse(content=html_content)
+
+@app.post("/submit")
+def submit(user_input: str = Form(...)):
+    with open("user_inputs.txt", "a") as file:
+        file.write(user_input + "\n")
+    return {"message": "Input received", "input": user_input}
