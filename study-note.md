@@ -129,3 +129,21 @@ Hide the credentials in the project. Abstract them away from code.
 ```
 ${{ secrets.SECRET_NAME }}
 ```
+
+### Takeaways
+
+Github Actions provides a quick and easy way to connect version control and deployment as well as automation of the deployment processes. 
+
+Challenges:
+
+1. Set up separate service account for the Google Cloud Run service.
+1. Provide the service account with correct roles and permissions. There is no straightforward answer on any forum. 
+
+Solutions:
+
+1. Find clues from error message! Read through forum answers even it doesn't seem relevant. 
+1. Look for possible solutions from official documentation. 
+1. Watch YouTube tutorials that teach similar things. Just need to make sure the topic is Google Cloud - the correct platform, because different platforms would have different setup.
+1. Walk through course recordings again with full attention. Try to find difference between the demostration and my own code. 
+1. Be patient and trust yourself. 
+1. Refresh and wait for a while. Sometimes cloud server might take longer to update all the changes. 

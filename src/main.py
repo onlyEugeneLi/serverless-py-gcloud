@@ -7,7 +7,7 @@ import json
 # MODE = os.environ.get("MODE") or "abc" # abc - default value
 MODE = config("MODE", cast=str, default="Test")
 USERNAME = config("USERNAME", cast=str, default="Unknown")
-USERID = config("USERID", cast=int, default=000000)
+USERID = config("USERID", cast=int, default=0)
 # MODE is a made up variable. It can other things such as PORT, USERNAME, PASSWORD, etc.
 
 app = FastAPI()
@@ -21,6 +21,7 @@ def home_page():
         "Hello": "World",
         "Description": "This is my first cloud deployment using FastAPI",
         "Platform": "Google Cloud Run",
+        "Thanks": "Thanks for joining me on this journey",
         "mode": MODE,
         "username": USERNAME,
         "userid": USERID
