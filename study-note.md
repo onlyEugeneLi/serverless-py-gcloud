@@ -147,3 +147,4 @@ Solutions:
 1. Walk through course recordings again with full attention. Try to find difference between the demostration and my own code. 
 1. Be patient and trust yourself. 
 1. Refresh and wait for a while. Sometimes cloud server might take longer to update all the changes. 
+1. Document debug attempts in details! Reflect them in commit messages. 
