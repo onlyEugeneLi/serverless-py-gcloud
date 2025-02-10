@@ -2,25 +2,34 @@ import os
 from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse
 from src.env import config 
+from pydantic import BaseModel, constr, StringConstraints
+from typing_extensions import Annotated
 import json
-
-# Hardcode: MODE = "dev"
-# MODE = os.environ.get("MODE") or "abc" # abc - default value
-MODE = config("MODE", cast=str, default="Test")
-USERNAME = config("USERNAME", cast=str, default="Unknown")
-USERID = config("USERID", cast=int, default=000000)
-# MODE is a made up variable. It can other things such as PORT, USERNAME, PASSWORD, etc.
 
 app = FastAPI()
 
+class UserInput(BaseModel):
+    # user_input: constr(max_length=64)
+    user_input: Annotated[
+                str,
+                StringConstraints(
+                    max_length=64
+                ),
+            ]
+
 @app.get("/", response_class=HTMLResponse)
 def home_page():
-    with open("src/template.html", "r") as file:
+    with open("src/form.html", "r") as file:
         html_content = file.read()
     return HTMLResponse(content=html_content)
 
-@app.post("/submit")
-def submit(user_input: str = Form(...)):
+@app.post("/submit", response_class=HTMLResponse)
+def submit(user_input_instance: UserInput = Form(...)):
+    # Store input
     with open("user_inputs.txt", "a") as file:
-        file.write(user_input + "\n")
-    return {"message": "Input received", "input": user_input}
+        file.write(user_input_instance.user_input + "\n")
+    # Instruct user to close the page
+    with open("src/thank_you.html", "r") as file:
+        thank_you_content = file.read()
+    thank_you_content = thank_you_content.replace("{{user_input}}", user_input_instance.user_input)
+    return HTMLResponse(content=thank_you_content)
