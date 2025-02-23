@@ -2,8 +2,9 @@ import pathlib
 from functools import lru_cache
 from decouple import Config, RepositoryEnv # Configuring environment variables
 
+# Get the path of the .env file in the project
 # Don't have to hard code the path
-BASE_DIR = pathlib.Path(__file__).parent.parent
+BASE_DIR = pathlib.Path(__file__).parent.parent # parent.parent = ../.. (going back two directories)
 # .env path: /Users/maceugene/Documents/Projects/serverless-py/.env
 print(BASE_DIR)
 ENV_PATH = BASE_DIR / '.env'
