@@ -37,3 +37,7 @@ I will explain how I complete this project step by step and share my thoughts on
 
 Please stay tuned!
 
+## Room for growth
+
+Incorporate Google Secret Manager to manage environment variable. And update Actions accordingly. 
+
