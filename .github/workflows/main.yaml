@@ -6,8 +6,9 @@ on:
   push:
     branches:
       - "main"
-      - "setup-gcloud"
-      # - "hello-gcloud"
+      - "setup-gcloud" # old name
+      - "cd-pipeline" # new name
+      # - "hello-gcloud" # demo branch
 
 jobs:
   test:
