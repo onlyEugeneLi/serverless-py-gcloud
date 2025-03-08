@@ -40,7 +40,7 @@ def get_google_secret_payload(gcloud_secret_name = "py-env-file"):
         # use an injected operating system environment variable 
         # for the gcloud secret name or 
         # the value of the "gcloud_secret_name" argument
-        secret_label = os.environ.get("GCLOUD_SECRET_NAME", gcloud_secret_name)
+        secret_label = os.environ.get("GCLOUD_SECRET_LABEL", gcloud_secret_name)
         # project_id comes from previous step
         gcloud_secret_name_path = f"projects/{project_id}/secrets/{secret_label}/versions/latest"
         # this should print the contents of your secret

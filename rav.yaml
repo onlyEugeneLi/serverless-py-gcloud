@@ -34,3 +34,5 @@ scripts:
     - docker push us-central1-docker.pkg.dev/serverless-py-app/serverless-py-repo/serverless-py --all-tags
   deploy:
     - gcloud run deploy serverless-py --image=us-central1-docker.pkg.dev/serverless-py-app/serverless-py-repo/serverless-py:latest --allow-unauthenticated --region=us-central1 --project=serverless-py-app
+  cloud_run_perms:
+    - gcloud secrets add-iam-policy-binding py-env-file --member='serviceAccount:514560307354-compute@developer.gserviceaccount.com' --role='roles/secretmanager.secretAccessor'
