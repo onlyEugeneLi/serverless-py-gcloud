@@ -45,10 +45,6 @@ jobs:
         with:
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
       - name: Build container image
-        env:
-          MODE: "prod-github-actions"
-          USERNAME: "DevOps-learner"
-          USERID: "888888"
         run: |
             docker build --platform=linux/amd64 -f Dockerfile -t serverless-py-github .
             docker tag serverless-py-github ${{ secrets.CONTAINER_IMAGE_URL }}:${GITHUB_RUN_ID}
