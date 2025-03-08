@@ -9,6 +9,7 @@ on:
       - "setup-gcloud" # old name
       - "cd-pipeline" # new name
       # - "hello-gcloud" # demo branch
+      - "gcloud-secrets-manager"
 
 jobs:
   test:
