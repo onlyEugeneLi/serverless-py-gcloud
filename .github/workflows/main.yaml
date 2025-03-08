@@ -7,7 +7,7 @@ on:
     branches:
       - "main"
       - "setup-gcloud" # old name
-      - "cd-pipeline" # new name
+      # - "cd-pipeline" # new name
       # - "hello-gcloud" # demo branch
 
 jobs:
