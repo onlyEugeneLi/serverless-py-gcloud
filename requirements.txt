@@ -8,3 +8,7 @@ rav # Command shortcut for running the app
 # Testing
 pytest # Testing framework
 httpx # HTTP client for testing
+
+# Google Cloud: Treat the local as it is a service account
+google-auth
+google-cloud-secret-manager

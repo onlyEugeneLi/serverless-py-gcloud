@@ -1,3 +1,4 @@
+# Commands notebook
 scripts:
   runserver: uvicorn src.main:app --reload
   installs: pip install -r requirements.txt
@@ -13,6 +14,8 @@ scripts:
                   --rm --name serverless-cont -it serverless-py
   run: docker run --env-file .env-prod -p 1234:8000 
       --rm --name serverless-cont -it serverless-py
+  update_prod_secrets:
+    - gcloud secrets versions add py-env-file --data-file .env-prod
   build_run: 
     - rav run build
     - rav run run
