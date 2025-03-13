@@ -9,7 +9,7 @@ Serverless enables you to focus on code, not infrastructure. Deploy a Docker Con
 
 This is a study outcome from a Udemy course [Serverless Docker-based Python Application on Google Cloud](https://www.udemy.com/share/103owu/). 
 
-## Delieverables
+## Try the API!
 
 And you can find my work deployed on Google Cloud through the link below.
 
